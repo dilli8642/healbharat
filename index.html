@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Emergency Monitoring Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <h1>AI Emergency Operations Dashboard</h1>
+    <div class="live-badge">
+      <span class="dot"></span> Live Monitoring
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <h2>Emergency Pressure & Ambulance Load Predictor</h2>
+      <p>
+        Real-time hospital overload monitoring, hotspot detection, and arrival forecasting.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h3>Enter Live Emergency Data</h3>
+
+      <div class="form-grid">
+        <input type="number" id="pressureInput" placeholder="Emergency Pressure (%)">
+        <input type="number" id="ambulanceInput" placeholder="Ambulance Arrivals">
+        <button onclick="updateDashboard()">Update Dashboard</button>
+      </div>
+    </section>
+
+    <section class="cards">
+
+      <div class="card">
+        <h4>Emergency Pressure</h4>
+        <p id="pressureScore">0%</p>
+      </div>
+
+      <div class="card">
+        <h4>Ambulance Arrivals</h4>
+        <p id="ambulanceCount">0</p>
+      </div>
+
+      <div class="card">
+        <h4>Overload Risk</h4>
+        <p id="riskStatus">LOW</p>
+      </div>
+
+    </section>
+
+    <section class="panel">
+      <h3>Ambulance Arrival Forecast (Next Hours)</h3>
+      <canvas id="forecastChart"></canvas>
+    </section>
+
+    <section class="panel">
+      <h3>Accident Hotspot Zone Entry</h3>
+
+      <div class="form-grid">
+        <input type="text" id="zoneInput" placeholder="Zone Name">
+        <input type="number" id="accidentInput" placeholder="Accident Count">
+        <select id="riskInput">
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+
+        <button onclick="addHotspot()">Add Hotspot</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Accidents</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody id="hotspotTable"></tbody>
+      </table>
+    </section>
+
+    <footer>
+      Reach Us for Help!
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
