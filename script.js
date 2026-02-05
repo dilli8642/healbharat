@@ -1,73 +1,89 @@
 let chart;
-function initChart() {
-  const ctx = document.getElementById("forecastChart").getContext("2d");
+let hotspotData = [];
 
-  chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: ["Now", "1Hr", "2Hr", "3Hr", "4Hr", "5Hr", "6Hr"],
-      datasets: [{
-        label: "Forecast Arrivals",
-        data: [0, 0, 0, 0, 0, 0, 0],
-        borderWidth: 3,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true
+function initChart() {
+  chart = new Chart(
+    document.getElementById("forecastChart"),
+    {
+      type: "line",
+      data: {
+        labels: ["Now", "+1h", "+2h", "+3h", "+4h"],
+        datasets: [{
+          label: "Predicted Arrivals",
+          data: [0,0,0,0,0],
+          borderWidth: 3,
+          tension: 0.4
+        }]
+      },
+      options: { responsive: true }
     }
-  });
+  );
 }
 
 function updateDashboard() {
 
-  let pressure = Number(document.getElementById("pressureInput").value);
-  let ambulance = Number(document.getElementById("ambulanceInput").value);
+  const basePressure = Number(pressureInput.value);
+  const ambulances = Number(ambulanceInput.value);
 
-  document.getElementById("pressureScore").innerText = pressure + "%";
-  document.getElementById("ambulanceCount").innerText = ambulance;
+  const epi = Math.round(basePressure + ambulances * 1.5);
+  document.getElementById("epi").innerText = epi;
 
-  let risk = "LOW";
-  if (pressure >= 70) risk = "HIGH";
-  else if (pressure >= 40) risk = "MEDIUM";
+  const loadDensity = Math.round(ambulances / 5);
+  document.getElementById("loadDensity").innerText = loadDensity;
 
-  document.getElementById("riskStatus").innerText = risk;
+  let alert = "NORMAL";
+  if (epi > 120) alert = "CRITICAL";
+  else if (epi > 90) alert = "WARNING";
 
-  let forecast = [
-    ambulance,
-    ambulance + 3,
-    ambulance + 6,
-    ambulance + 8,
-    ambulance + 6,
-    ambulance + 4,
-    ambulance + 2
+  document.getElementById("alertStatus").innerText = alert;
+
+  chart.data.datasets[0].data = [
+    ambulances,
+    ambulances + 3,
+    ambulances + 6,
+    ambulances + 8,
+    ambulances + 6
   ];
-
-  chart.data.datasets[0].data = forecast;
   chart.update();
 }
 
 function addHotspot() {
 
-  let zone = document.getElementById("zoneInput").value;
-  let accidents = document.getElementById("accidentInput").value;
-  let risk = document.getElementById("riskInput").value;
+  const zone = zoneInput.value;
+  const accidents = Number(accidentInput.value);
 
-  if (!zone || !accidents) {
-    alert("Please fill all fields!");
-    return;
-  }
+  if (!zone || !accidents) return;
 
-  document.getElementById("hotspotTable").innerHTML += `
-    <tr>
-      <td>${zone}</td>
-      <td>${accidents}</td>
-      <td>${risk}</td>
-    </tr>
-  `;
+  const score = accidents * 2;
 
-  document.getElementById("zoneInput").value = "";
-  document.getElementById("accidentInput").value = "";
+  hotspotData.push({ zone, accidents, score });
+
+  renderHotspots();
+  zoneInput.value = "";
+  accidentInput.value = "";
+}
+
+function renderHotspots() {
+  hotspotTable.innerHTML = "";
+
+  hotspotData.forEach(h => {
+    hotspotTable.innerHTML += `
+      <tr>
+        <td>${h.zone}</td>
+        <td>${h.accidents}</td>
+        <td>${h.score}</td>
+      </tr>
+    `;
+  });
+}
+
+function applyFilters() {
+  alert(
+    `Filters Applied:
+City: ${cityFilter.value}
+Hospital: ${hospitalFilter.value}
+Date: ${dateFilter.value}`
+  );
 }
 
 window.onload = initChart;

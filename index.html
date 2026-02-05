@@ -1,80 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Emergency Monitoring Dashboard</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heal Bharat | Emergency Dashboard</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <header class="navbar">
-    <h1>AI Emergency Operations Dashboard</h1>
-    <div class="live-badge">
-      <span class="dot"></span> Live Monitoring
-    </div>
-  </header>
+<header class="topbar">
+  <h1>Heal Bharat - Emergency Operations</h1>
+  <span class="live-pill"><span></span> Real-Time Monitoring</span>
+</header>
 
-  <main class="container">
+<div class="layout">
+
+  <aside class="sidebar">
+    <h3>Filters</h3>
+
+    <label>City</label>
+    <select id="cityFilter">
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Andhra Pradesh">Andhra Pradesh</option>
+      <option value="Bangalore">Bangalore</option>
+    </select>
+
+    <label>Hospital</label>
+    <select id="hospitalFilter">
+      <option value="Apollo">Apollo</option>
+      <option value="Govt">Govt Hospital</option>
+      <option value="KIMS">KIMS</option>
+      <option value="Medicover">Medicover</option>
+    </select>
+
+    <label>Date</label>
+    <input type="date" id="dateFilter">
+
+    <button onclick="applyFilters()">Apply</button>
+  </aside>
+
+  <main class="content">
 
     <section class="hero">
-      <h2>Emergency Pressure & Ambulance Load Predictor</h2>
-      <p>
-        Real-time hospital overload monitoring, hotspot detection, and arrival forecasting.
-      </p>
+      <h2>Emergency Load Monitoring</h2>
+      <p>Predicting overload risk using live operational indicators</p>
     </section>
 
-    <section class="panel">
-      <h3>Enter Live Emergency Data</h3>
+    <section class="card-box">
+      <h3>Live Data Input</h3>
 
-      <div class="form-grid">
-        <input type="number" id="pressureInput" placeholder="Emergency Pressure (%)">
+      <div class="form-row">
+        <input type="number" id="pressureInput" placeholder="Base ED Pressure (%)">
         <input type="number" id="ambulanceInput" placeholder="Ambulance Arrivals">
-        <button onclick="updateDashboard()">Update Dashboard</button>
+        <button onclick="updateDashboard()">Process</button>
       </div>
     </section>
 
-    <section class="cards">
-
-      <div class="card">
-        <h4>Emergency Pressure</h4>
-        <p id="pressureScore">0%</p>
+   
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <h4>Emergency Pressure Index</h4>
+        <p id="epi">0</p>
       </div>
 
-      <div class="card">
-        <h4>Ambulance Arrivals</h4>
-        <p id="ambulanceCount">0</p>
+      <div class="kpi-card">
+        <h4>Ambulance Load Density</h4>
+        <p id="loadDensity">0</p>
       </div>
 
-      <div class="card">
-        <h4>Overload Risk</h4>
-        <p id="riskStatus">LOW</p>
+      <div class="kpi-card">
+        <h4>Alert Status</h4>
+        <p id="alertStatus">NORMAL</p>
       </div>
-
     </section>
 
-    <section class="panel">
-      <h3>Ambulance Arrival Forecast (Next Hours)</h3>
+   
+    <section class="card-box">
+      <h3>Arrival Forecast (Logic-Based)</h3>
       <canvas id="forecastChart"></canvas>
     </section>
 
-    <section class="panel">
-      <h3>Accident Hotspot Zone Entry</h3>
+   
+    <section class="card-box">
+      <h3>Accident Hotspot Zones</h3>
 
-      <div class="form-grid">
-        <input type="text" id="zoneInput" placeholder="Zone Name">
-        <input type="number" id="accidentInput" placeholder="Accident Count">
-        <select id="riskInput">
-          <option>High</option>
-          <option>Medium</option>
-          <option>Low</option>
-        </select>
-
-        <button onclick="addHotspot()">Add Hotspot</button>
+      <div class="form-row">
+        <input type="text" id="zoneInput" placeholder="Zone">
+        <input type="number" id="accidentInput" placeholder="Accidents">
+        <button onclick="addHotspot()">Add</button>
       </div>
 
       <table>
@@ -82,7 +101,7 @@
           <tr>
             <th>Zone</th>
             <th>Accidents</th>
-            <th>Risk</th>
+            <th>Hotspot Score</th>
           </tr>
         </thead>
         <tbody id="hotspotTable"></tbody>
@@ -94,7 +113,8 @@
     </footer>
 
   </main>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
