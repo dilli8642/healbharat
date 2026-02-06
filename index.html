@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Heal Bharat | Emergency Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heal Bharat | AI Emergency Dashboard</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="topbar">
-  <h1>Heal Bharat - Emergency Operations</h1>
-  <span class="live-pill"><span></span> Real-Time Monitoring</span>
+  <h1>Heal Bharat</h1>
+  <div class="live">
+    <span class="dot"></span> AI Monitoring Active
+  </div>
 </header>
 
 <div class="layout">
@@ -23,7 +25,7 @@
 
     <label>City</label>
     <select id="cityFilter">
-      <option value="Hyderabad">Hyderabad</option>
+     <option value="Hyderabad">Hyderabad</option>
       <option value="Delhi">Delhi</option>
       <option value="Mumbai">Mumbai</option>
       <option value="Chennai">Chennai</option>
@@ -42,28 +44,27 @@
     <label>Date</label>
     <input type="date" id="dateFilter">
 
-    <button onclick="applyFilters()">Apply</button>
+    <button onclick="applyFilters()">Apply Filters</button>
   </aside>
 
   <main class="content">
 
     <section class="hero">
-      <h2>Emergency Load Monitoring</h2>
-      <p>Predicting overload risk using live operational indicators</p>
+      <h2>Emergency Department Intelligence Dashboard</h2>
+      <p>AI-driven emergency pressure prediction and ambulance load monitoring</p>
     </section>
 
-    <section class="card-box">
-      <h3>Live Data Input</h3>
-
-      <div class="form-row">
+    
+    <section class="card">
+      <h3>Live Emergency Input</h3>
+      <div class="grid">
         <input type="number" id="pressureInput" placeholder="Base ED Pressure (%)">
         <input type="number" id="ambulanceInput" placeholder="Ambulance Arrivals">
-        <button onclick="updateDashboard()">Process</button>
+        <button onclick="updateDashboard()">Update Dashboard</button>
       </div>
     </section>
 
-   
-    <section class="kpi-grid">
+    <section class="kpi">
       <div class="kpi-card">
         <h4>Emergency Pressure Index</h4>
         <p id="epi">0</p>
@@ -71,29 +72,28 @@
 
       <div class="kpi-card">
         <h4>Ambulance Load Density</h4>
-        <p id="loadDensity">0</p>
+        <p id="density">0</p>
       </div>
 
       <div class="kpi-card">
         <h4>Alert Status</h4>
-        <p id="alertStatus">NORMAL</p>
+        <p id="alert">NORMAL</p>
       </div>
     </section>
 
-   
-    <section class="card-box">
-      <h3>Arrival Forecast (Logic-Based)</h3>
+    <section class="card">
+      <h3>Ambulance Arrival Forecast</h3>
       <canvas id="forecastChart"></canvas>
     </section>
 
-   
-    <section class="card-box">
+    
+    <section class="card">
       <h3>Accident Hotspot Zones</h3>
 
-      <div class="form-row">
+      <div class="grid">
         <input type="text" id="zoneInput" placeholder="Zone">
         <input type="number" id="accidentInput" placeholder="Accidents">
-        <button onclick="addHotspot()">Add</button>
+        <button onclick="addHotspot()">Add Zone</button>
       </div>
 
       <table>
@@ -109,7 +109,7 @@
     </section>
 
     <footer>
-      Reach Us for Help!
+       Heal Bharat AI Emergency System
     </footer>
 
   </main>

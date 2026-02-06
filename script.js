@@ -1,5 +1,5 @@
 let chart;
-let hotspotData = [];
+let hotspots = [];
 
 function initChart() {
   chart = new Chart(
@@ -7,9 +7,9 @@ function initChart() {
     {
       type: "line",
       data: {
-        labels: ["Now", "+1h", "+2h", "+3h", "+4h"],
+        labels: ["Now","+1h","+2h","+3h","+4h"],
         datasets: [{
-          label: "Predicted Arrivals",
+          label: "Predicted Ambulance Arrivals",
           data: [0,0,0,0,0],
           borderWidth: 3,
           tension: 0.4
@@ -22,28 +22,24 @@ function initChart() {
 
 function updateDashboard() {
 
-  const basePressure = Number(pressureInput.value);
+  const pressure = Number(pressureInput.value);
   const ambulances = Number(ambulanceInput.value);
 
-  const epi = Math.round(basePressure + ambulances * 1.5);
-  document.getElementById("epi").innerText = epi;
+  const epi = Math.round(pressure + ambulances * 1.5);
+  epi.innerText = epi;
 
-  const loadDensity = Math.round(ambulances / 5);
-  document.getElementById("loadDensity").innerText = loadDensity;
+  const density = Math.round(ambulances / 5);
+  document.getElementById("density").innerText = density;
 
-  let alert = "NORMAL";
-  if (epi > 120) alert = "CRITICAL";
-  else if (epi > 90) alert = "WARNING";
+  let alertStatus = "NORMAL";
+  if (epi > 120) alertStatus = "CRITICAL";
+  else if (epi > 90) alertStatus = "WARNING";
 
-  document.getElementById("alertStatus").innerText = alert;
+  document.getElementById("alert").innerText = alertStatus;
 
-  chart.data.datasets[0].data = [
-    ambulances,
-    ambulances + 3,
-    ambulances + 6,
-    ambulances + 8,
-    ambulances + 6
-  ];
+  chart.data.datasets[0].data =
+    [ambulances, ambulances+2, ambulances+4, ambulances+5, ambulances+3];
+
   chart.update();
 }
 
@@ -52,38 +48,26 @@ function addHotspot() {
   const zone = zoneInput.value;
   const accidents = Number(accidentInput.value);
 
-  if (!zone || !accidents) return;
+  if(!zone || !accidents) return;
 
   const score = accidents * 2;
 
-  hotspotData.push({ zone, accidents, score });
+  hotspots.push({zone, accidents, score});
 
-  renderHotspots();
-  zoneInput.value = "";
-  accidentInput.value = "";
+  hotspotTable.innerHTML += `
+    <tr>
+      <td>${zone}</td>
+      <td>${accidents}</td>
+      <td>${score}</td>
+    </tr>
+  `;
+
+  zoneInput.value="";
+  accidentInput.value="";
 }
 
-function renderHotspots() {
-  hotspotTable.innerHTML = "";
-
-  hotspotData.forEach(h => {
-    hotspotTable.innerHTML += `
-      <tr>
-        <td>${h.zone}</td>
-        <td>${h.accidents}</td>
-        <td>${h.score}</td>
-      </tr>
-    `;
-  });
-}
-
-function applyFilters() {
-  alert(
-    `Filters Applied:
-City: ${cityFilter.value}
-Hospital: ${hospitalFilter.value}
-Date: ${dateFilter.value}`
-  );
+function applyFilters(){
+  alert("Filters applied (MVP logic)");
 }
 
 window.onload = initChart;
