@@ -138,6 +138,19 @@ footer {
   font-weight: bold;
   color: #16a34a;
 }
+.chart-container {
+  width: 100%;
+  height: 300px;
+  max-width: 900px;
+  margin: auto;
+}
+.chart-wrapper {
+    width: 100%;
+    height: 320px;
+    max-height: 320px;
+    position: relative;
+}
+
 
 @media(max-width:768px){
   .layout {
