@@ -60,7 +60,7 @@
       <div class="grid">
         <input type="number" id="pressureInput" placeholder="Base ED Pressure (%)">
         <input type="number" id="ambulanceInput" placeholder="Ambulance Arrivals">
-        <button type="button" onclick="updateDashboard(event)">
+        <button id="updateBtn" type="button" onclick="updateDashboard(event)">
   Update Dashboard
 </button>
 
@@ -75,7 +75,7 @@
 
       <div class="kpi-card">
         <h4>Ambulance Load Density</h4>
-        <p id="loadDensity">0</p>
+        <h2 id="loadDensity">0</p>
       </div>
 
       <div class="kpi-card">
